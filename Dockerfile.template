@@ -1,0 +1,21 @@
+FROM balenalib/%%BALENA_MACHINE_NAME%%-python:3-buster-build
+
+RUN apt-get update && apt-get upgrade -y
+
+RUN apt-get install -y ffmpeg libsm6 libxext6
+
+RUN pip3 install git+https://github.com/waveform80/picamera
+
+RUN pip3 install imutils numpy opencv-contrib-python
+
+#RUN mkdir log && touch /app/log/debug.log
+#RUN mkdir log && touch /log/debug.log
+#RUN mkdir /usr/src/app/log/ && touch debug.log
+WORKDIR /usr/src/app
+
+COPY . .
+
+CMD [ "bash", "start.sh" ]
+#CMD [ "sleep", "infinity" ]
+# To run on startup, change to:
+#CMD [ "python3", "main.py" ]
